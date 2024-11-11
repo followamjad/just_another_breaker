@@ -89,18 +89,6 @@ vertical_alignment = 1
 
 [node name="brick" parent="game_controller" instance=ExtResource("9_n4wlu")]
 
-[node name="brick2" parent="game_controller" instance=ExtResource("9_n4wlu")]
-position = Vector2(668.532, 120.478)
-
-[node name="brick3" parent="game_controller" instance=ExtResource("9_n4wlu")]
-position = Vector2(233.836, 155.617)
-
-[node name="brick4" parent="game_controller" instance=ExtResource("9_n4wlu")]
-position = Vector2(351.754, 239.952)
-
-[node name="brick5" parent="game_controller" instance=ExtResource("9_n4wlu")]
-position = Vector2(570.601, 243.968)
-
 [connection signal="area_entered" from="game_controller/paddle" to="game_controller/paddle" method="_on_area_entered"]
 [connection signal="body_entered" from="game_controller/paddle" to="game_controller/paddle" method="_on_body_entered"]
 [connection signal="bounce_the_ball" from="game_controller/paddle" to="game_controller" method="_on_paddle_bounce_the_ball"]
