@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=3 uid="uid://dtljx5s72810x"]
+
+[ext_resource type="Script" path="res://scripts/paddle.gd" id="1_4g5bh"]
+[ext_resource type="Texture2D" uid="uid://by7ygr2vvtcxv" path="res://art/actual paddle.png" id="1_hvkyd"]
+[ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_vyc1a"]
+[ext_resource type="Texture2D" uid="uid://bsdd8lrrdn6u3" path="res://art/actual ball.png" id="3_3o0do"]
+[ext_resource type="Script" path="res://scripts/ball.gd" id="3_xehac"]
+[ext_resource type="Script" path="res://scripts/wall_top.gd" id="5_k7ndg"]
+[ext_resource type="Script" path="res://scripts/wall_left.gd" id="6_6hdt0"]
+[ext_resource type="Script" path="res://scripts/wall_right.gd" id="7_trhln"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_761qt"]
+size = Vector2(59.9583, 14.0558)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lmx62"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oo8hs"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4kqlb"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i38jt"]
+normal = Vector2(-1, 0)
+
+[node name="map" type="Node2D"]
+scale = Vector2(1.0007, 0.996034)
+
+[node name="game_controller" type="Node2D" parent="."]
+script = ExtResource("1_vyc1a")
+
+[node name="paddle" type="Area2D" parent="game_controller" node_paths=PackedStringArray("ball")]
+position = Vector2(592.587, 606.405)
+script = ExtResource("1_4g5bh")
+ball = NodePath("../ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game_controller/paddle"]
+shape = SubResource("RectangleShape2D_761qt")
+
+[node name="Sprite2D" type="Sprite2D" parent="game_controller/paddle"]
+texture = ExtResource("1_hvkyd")
+
+[node name="ball" type="Area2D" parent="game_controller"]
+position = Vector2(587.591, 166.661)
+script = ExtResource("3_xehac")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game_controller/ball"]
+shape = SubResource("CircleShape2D_lmx62")
+
+[node name="Sprite2D" type="Sprite2D" parent="game_controller/ball"]
+texture = ExtResource("3_3o0do")
+
+[node name="wall_top" type="Area2D" parent="game_controller" node_paths=PackedStringArray("ball")]
+script = ExtResource("5_k7ndg")
+ball = NodePath("../ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game_controller/wall_top"]
+position = Vector2(592.587, 0)
+shape = SubResource("WorldBoundaryShape2D_oo8hs")
+
+[node name="wall_left" type="Area2D" parent="game_controller" node_paths=PackedStringArray("ball")]
+script = ExtResource("6_6hdt0")
+ball = NodePath("../ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game_controller/wall_left"]
+position = Vector2(0, 174.693)
+shape = SubResource("WorldBoundaryShape2D_4kqlb")
+
+[node name="wall_right" type="Area2D" parent="game_controller"]
+script = ExtResource("7_trhln")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game_controller/wall_right"]
+position = Vector2(1151.2, 0)
+shape = SubResource("WorldBoundaryShape2D_i38jt")
+
+[node name="ball_direction_label" type="Label" parent="game_controller"]
+offset_left = 503.649
+offset_top = 238.948
+offset_right = 680.649
+offset_bottom = 289.948
+theme_override_font_sizes/font_size = 32
+text = "0,1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="area_entered" from="game_controller/paddle" to="game_controller/paddle" method="_on_area_entered"]
+[connection signal="body_entered" from="game_controller/paddle" to="game_controller/paddle" method="_on_body_entered"]
+[connection signal="bounce_the_ball" from="game_controller/paddle" to="game_controller" method="_on_paddle_bounce_the_ball"]
+[connection signal="area_entered" from="game_controller/wall_top" to="game_controller/wall_top" method="_on_area_entered"]
+[connection signal="bounce_the_ball" from="game_controller/wall_top" to="game_controller" method="_on_wall_top_bounce_the_ball"]
+[connection signal="area_entered" from="game_controller/wall_left" to="game_controller/wall_left" method="_on_area_entered"]
+[connection signal="bounce_the_ball" from="game_controller/wall_left" to="game_controller" method="_on_wall_left_bounce_the_ball"]
+[connection signal="area_entered" from="game_controller/wall_right" to="game_controller/wall_right" method="_on_area_entered"]
+[connection signal="bounce_the_ball" from="game_controller/wall_right" to="game_controller" method="_on_wall_right_bounce_the_ball"]
