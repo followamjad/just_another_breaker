@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dtljx5s72810x"]
+[gd_scene load_steps=14 format=3 uid="uid://dtljx5s72810x"]
 
 [ext_resource type="Script" path="res://scripts/paddle.gd" id="1_4g5bh"]
 [ext_resource type="Texture2D" uid="uid://by7ygr2vvtcxv" path="res://art/actual paddle.png" id="1_hvkyd"]
@@ -8,21 +8,20 @@
 [ext_resource type="Script" path="res://scripts/wall_top.gd" id="5_k7ndg"]
 [ext_resource type="Script" path="res://scripts/wall_left.gd" id="6_6hdt0"]
 [ext_resource type="Script" path="res://scripts/wall_right.gd" id="7_trhln"]
-[ext_resource type="PackedScene" uid="uid://cwtocdlhe0yrh" path="res://scenes/brick.tscn" id="9_n4wlu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_761qt"]
 size = Vector2(59.9583, 14.0558)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lmx62"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_40wvr"]
-size = Vector2(1151.19, 32.1274)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oo8hs"]
+normal = Vector2(0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_35mr6"]
-size = Vector2(51.9636, 684.716)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4kqlb"]
+normal = Vector2(1, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mqh1k"]
-size = Vector2(45.9682, 684.716)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i38jt"]
+normal = Vector2(-1, 0)
 
 [node name="map" type="Node2D"]
 scale = Vector2(1.0007, 0.996034)
@@ -56,26 +55,23 @@ script = ExtResource("5_k7ndg")
 ball = NodePath("../ball")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="game_controller/wall_top"]
-position = Vector2(575.597, -16.0637)
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_40wvr")
+position = Vector2(592.587, 0)
+shape = SubResource("WorldBoundaryShape2D_oo8hs")
 
 [node name="wall_left" type="Area2D" parent="game_controller" node_paths=PackedStringArray("ball")]
 script = ExtResource("6_6hdt0")
 ball = NodePath("../ball")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="game_controller/wall_left"]
-position = Vector2(-25.9818, 311.234)
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_35mr6")
+position = Vector2(0, 174.693)
+shape = SubResource("WorldBoundaryShape2D_4kqlb")
 
 [node name="wall_right" type="Area2D" parent="game_controller"]
 script = ExtResource("7_trhln")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="game_controller/wall_right"]
-position = Vector2(1174.18, 310.23)
-scale = Vector2(1, 0.999999)
-shape = SubResource("RectangleShape2D_mqh1k")
+position = Vector2(1151.2, 0)
+shape = SubResource("WorldBoundaryShape2D_i38jt")
 
 [node name="ball_direction_label" type="Label" parent="game_controller"]
 offset_left = 503.649
@@ -86,20 +82,6 @@ theme_override_font_sizes/font_size = 32
 text = "0,1"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="brick" parent="game_controller" instance=ExtResource("9_n4wlu")]
-
-[node name="brick2" parent="game_controller" instance=ExtResource("9_n4wlu")]
-position = Vector2(668.532, 120.478)
-
-[node name="brick3" parent="game_controller" instance=ExtResource("9_n4wlu")]
-position = Vector2(233.836, 155.617)
-
-[node name="brick4" parent="game_controller" instance=ExtResource("9_n4wlu")]
-position = Vector2(351.754, 239.952)
-
-[node name="brick5" parent="game_controller" instance=ExtResource("9_n4wlu")]
-position = Vector2(570.601, 243.968)
 
 [connection signal="area_entered" from="game_controller/paddle" to="game_controller/paddle" method="_on_area_entered"]
 [connection signal="body_entered" from="game_controller/paddle" to="game_controller/paddle" method="_on_body_entered"]

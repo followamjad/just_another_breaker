@@ -6,6 +6,7 @@ var paddle_speed: int = 300
 enum state {MOVING, STOPPED}
 var game_state: state
 var previous_position: Vector2
+var velocity
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,7 +18,7 @@ func _process(delta: float) -> void:
 		position.x -= paddle_speed * delta
 	if Input.is_action_pressed("right"):
 		position.x += paddle_speed * delta
-
+	velocity = previous_position - position
 
 func _on_body_entered(body: Node2D) -> void:
 	if body == ball:
@@ -27,3 +28,7 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area == ball:
 		bounce_the_ball.emit()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("left") or event.is_action_pressed("right"):
+		previous_position = position

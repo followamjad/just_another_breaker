@@ -1,15 +1,17 @@
 extends Area2D
-
-var direction: Vector2
-const BALL_SPEED: int = 250
+signal bounce_the_ball
+@export var ball: Area2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	direction.y = 1
-	direction.x = randf_range(-1, 1)
-	print(direction)
+	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	position += direction * BALL_SPEED * delta
+	pass
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area == ball:
+		bounce_the_ball.emit()

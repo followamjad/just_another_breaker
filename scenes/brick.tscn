@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://cwtocdlhe0yrh"]
+
+[ext_resource type="Script" path="res://scripts/brick.gd" id="1_28vpn"]
+[ext_resource type="Texture2D" uid="uid://cgu4n7865goag" path="res://art/actual brick.png" id="2_b2hfi"]
+[ext_resource type="Script" path="res://scripts/top_area.gd" id="3_77myf"]
+[ext_resource type="Script" path="res://scripts/bottom_area.gd" id="4_7xpgl"]
+[ext_resource type="Script" path="res://scripts/right_area.gd" id="5_pvs5o"]
+[ext_resource type="Script" path="res://scripts/left_area.gd" id="6_dxrg5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ehoqe"]
+size = Vector2(67.9525, 3.01194)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7yjh"]
+size = Vector2(67.9594, 3.01194)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e6050"]
+size = Vector2(1.00279, 25.0996)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5mxk"]
+size = Vector2(0.999359, 25.0597)
+
+[node name="brick" type="Node2D"]
+position = Vector2(435.695, 117.466)
+script = ExtResource("1_28vpn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_b2hfi")
+
+[node name="top_area" type="Area2D" parent="." node_paths=PackedStringArray("ball")]
+position = Vector2(4.46439e-05, -11.0438)
+scale = Vector2(1, 1)
+script = ExtResource("3_77myf")
+ball = NodePath("")
+
+[node name="top_collision" type="CollisionShape2D" parent="top_area"]
+position = Vector2(-3.05176e-05, 0)
+shape = SubResource("RectangleShape2D_ehoqe")
+
+[node name="bottom_area" type="Area2D" parent="." node_paths=PackedStringArray("ball")]
+scale = Vector2(1, 1)
+script = ExtResource("4_7xpgl")
+ball = NodePath("")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bottom_area"]
+position = Vector2(2.44379e-06, 11.0438)
+shape = SubResource("RectangleShape2D_x7yjh")
+
+[node name="right_area" type="Area2D" parent="." node_paths=PackedStringArray("ball")]
+script = ExtResource("5_pvs5o")
+ball = NodePath("")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right_area"]
+position = Vector2(34.4776, 7.62939e-06)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_e6050")
+
+[node name="left_area" type="Area2D" parent="." node_paths=PackedStringArray("ball")]
+script = ExtResource("6_dxrg5")
+ball = NodePath("")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="left_area"]
+position = Vector2(-34.4759, 7.62939e-06)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_j5mxk")
+
+[connection signal="area_entered" from="top_area" to="top_area" method="_on_area_entered"]
+[connection signal="area_entered" from="bottom_area" to="bottom_area" method="_on_area_entered"]
+[connection signal="area_entered" from="right_area" to="right_area" method="_on_area_entered"]
+[connection signal="area_entered" from="left_area" to="left_area" method="_on_area_entered"]
